@@ -1,6 +1,7 @@
 <template>
   <button :class="['base-button', variant]" @click="handleClick">
-    {{ label }}
+    <slot name="icon-left"></slot>
+    <span class="text">{{ label }}</span>
   </button>
 </template>
 
@@ -18,26 +19,30 @@ const props = defineProps({
   },
 });
 const handleClick = () => {
-  props.onClick(); // Вызываем функцию, переданную из родительского компонента
+  props.onClick();
 };
 </script>
 
 <style scoped lang="scss">
 @import "/src/assets/styles/mixins.scss";
 
+.text {
+  padding: 0 5px;
+}
+
 .base-button {
   @include button-base;
 
   &.primary {
-    @include button-variant($primary-color);
+    @include button-variant($primary-color, white);
   }
 
   &.secondary {
-    @include button-variant($secondary-color);
+    @include button-variant($secondary-color, $text-color);
   }
 
   &.disabled {
-    @include button-variant($disabled-color);
+    @include button-variant($disabled-color, white);
     cursor: not-allowed;
     opacity: 0.6;
   }

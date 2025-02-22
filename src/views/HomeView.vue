@@ -1,36 +1,85 @@
 <template>
   <div class="home">
-    <h1>Главная страница</h1>
-    <ZMInput
-      v-model="inputValue"
-      label="Название поля"
-      inputHint="Подпись"
-      placeholder="Подсказка"
-    />
-    <p>Текущее значение: {{ inputValue }}</p>
-    <ZMButton
-      label="Отправить"
-      variant="primary"
-      :onClick="handleGreenButtonClick"
-    />
-    <ZMButton label="Отмена" variant="secondary" />
-    <ZMButton label="Отключено" variant="disabled" />
-    <ZMCheckbox label="Подпись" />
+    <div class="container">
+      <ZMHeader />
+      <div class="task-list">
+        <div
+          v-for="task in tasks"
+          :key="task.id"
+          class="task"
+          :class="{ 'task-bug': task.isBug }"
+        >
+          <div>
+            <span class="light">#{{ task.id }} </span>
+            <span> {{ task.title }}</span>
+          </div>
+
+          <div class="actions">
+            <img
+              :src="edit"
+              @click="editTask(task.id)"
+              alt="edit"
+              class="actions-btn"
+            />
+            <img
+              :src="Idelete"
+              @click="deleteTask(task.id)"
+              alt="delete"
+              class="actions-btn"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="stats-overlay">
+        <p class="stats">Задач: {{ tasks.length }} / Багов: {{ bugCount }}</p>
+
+        <ZMButton @click="addTask" label="Добавить задачу">
+          <template #icon-left>
+            <img :src="add" alt="add" />
+          </template>
+        </ZMButton>
+      </div>
+    </div>
   </div>
 </template>
 <script setup>
-import { ref } from "vue";
-import ZMInput from "@/components/ZMInput.vue";
+import add from "@/assets/icons/add.svg";
+import edit from "@/assets/icons/edit.svg";
+import Idelete from "@/assets/icons/Idelete.svg";
+import { ref, computed, onMounted } from "vue";
 import ZMButton from "@/components/ZMButton.vue";
-import ZMCheckbox from "@/components/ZMCheckbox.vue";
+import ZMHeader from "@/components/ZMHeader.vue";
 
-const inputValue = ref("");
+import { useRouter } from "vue-router";
 
-const handleGreenButtonClick = () => {
-  console.log("apapapapap");
+const router = useRouter();
+
+const bugCount = computed(
+  () => tasks.value.filter((task) => task.isBug).length
+);
+
+const addTask = () => {
+  router.push("/create");
 };
+
+const editTask = taskId => {
+  router.push(`/edit-task/${taskId}`);
+};
+
+const deleteTask = (taskId) => {
+  tasks.value = tasks.value.filter((task) => task.id !== taskId);
+  localStorage.setItem("tasks", JSON.stringify(tasks.value));
+};
+
+const tasks = ref([]);
+
+onMounted(() => {
+  const storedTasks = JSON.parse(localStorage.getItem("tasks")) || [];
+  tasks.value = storedTasks;
+});
 </script>
 <style scoped lang="scss">
+@import "/src/assets/styles/styles.scss";
 .home {
   display: flex;
   flex-direction: column;

@@ -1,0 +1,86 @@
+@import "variables.scss";
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  font-family: Arial, sans-serif;
+}
+
+.container {
+  width: 396px;
+  background: #fff;
+  padding: 20px;
+  text-align: center;
+  min-height: 664px;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 15px;
+
+  .logo {
+    width: 140px;
+    height: 43px;
+  }
+
+  h2 {
+    color: $light-color;
+    font-size: $primary-font-size;
+    font-weight: $primary-font-weight;
+  }
+}
+
+.task-list {
+  .task {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid $light-color;
+    padding: 10px 10px;
+    color: $text-color;
+    font-weight: $bold-font-weight;
+    font-size: $secondary-font-size;
+
+    &:hover {
+      background-color: $secondary-color;
+    }
+    .light {
+      opacity: 0.6;
+      margin-right: 3px;
+    }
+
+    .actions {
+      display: flex;
+      gap: 8px;
+
+      .actions-btn {
+        &:hover {
+          cursor: pointer;
+        }
+      }
+    }
+  }
+
+  .task-bug {
+    color: $error-color;
+    font-weight: $bold-font-weight;
+  }
+}
+
+.stats-overlay {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  &.stats {
+    color: $text-color;
+    font-size: $secondary-font-size;
+    font-weight: $secondary-font-weight;
+  }
+}

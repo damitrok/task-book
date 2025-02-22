@@ -30,6 +30,7 @@ const emit = defineEmits(["update:modelValue"]);
 .input-group {
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
   gap: 5px;
 
   label {
@@ -38,11 +39,12 @@ const emit = defineEmits(["update:modelValue"]);
   }
 
   .input-field {
+    box-sizing: border-box;
     width: 100%;
     padding: 10px;
-    border: 1px solid $border-color;
+    border: 1px solid $primary-color;
     border-radius: $border-radius;
-    font-size: 14px;
+    font-size: $secondary-font-size;
     transition: border 0.2s;
 
     &:focus {

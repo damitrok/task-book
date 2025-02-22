@@ -1,33 +1,23 @@
 <template>
-  <div>
+  <div class="checkbox-container">
     <label>
-      <input type="checkbox" v-model="isChecked" />
+      <input type="checkbox" v-model="checkboxModel" />
       <span class="label">{{ label }}</span>
     </label>
   </div>
 </template>
 <script setup>
-import { ref, defineProps, defineEmits, watch } from "vue";
+import { defineProps, defineModel } from "vue";
 
-const props = defineProps({
-  modelValue: {
-    type: Boolean,
-    required: true,
-  },
+defineProps({
   label: {
     type: String,
     required: true,
   },
 });
 
-const isChecked = ref(props.modelValue);
+const checkboxModel = defineModel(false);
 
-watch(
-  () => isChecked,
-  (newValue) => {
-    defineEmits("update:modelValue", newValue);
-  }
-);
 </script>
 
 <style scoped lang="scss">
@@ -36,20 +26,14 @@ watch(
 .checkbox-container {
   display: flex;
   align-items: center;
-  cursor: pointer;
 
   input {
-    display: none;
-
     &:checked + .checkbox {
-      background-color: #008cff;
-      border-color: #008cff;
+      background-color: $primary-color;
+      border-color: $primary-color;
 
       &::after {
         content: "✔";
-        color: white;
-        font-size: 14px;
-        font-weight: bold;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -60,7 +44,7 @@ watch(
   .checkbox {
     width: 20px;
     height: 20px;
-    border: 2px solid #bdbdbd;
+    border: 2px solid $hint-color;
     border-radius: 4px;
     display: inline-flex;
     align-items: center;
@@ -71,7 +55,9 @@ watch(
   .label {
     margin-left: 8px;
     font-size: 16px;
-    color: #4a4a4a;
+    color: $text-color;
+    font-size: $primary-font-size;
+    font-weight: $secondary-font-weight;
   }
 }
 </style>
