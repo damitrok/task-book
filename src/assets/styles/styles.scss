@@ -1,11 +1,12 @@
 @import "variables.scss";
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 
 body {
   display: flex;
   align-items: center;
   justify-content: center;
   height: 100vh;
-  font-family: Arial, sans-serif;
+  font-family: "Montserrat", serif;
 }
 
 .container {
